@@ -11,15 +11,15 @@ CONFIG += c++11
 SOURCES += \
     AudioFileStream.cpp \
     ButtonSettingsWidget.cpp \
+    SoundboardSocket.cpp \
     main.cpp \
-    mainwindow.cpp \
-    soundboardsocket.cpp
+    mainwindow.cpp
 
 HEADERS += \
     AudioFileStream.h \
     ButtonSettingsWidget.h \
-    mainwindow.h \
-    soundboardsocket.h
+    SoundboardSocket.h \
+    mainwindow.h
 
 TRANSLATIONS += \
     OpenTCPSoundboard_en_150.ts

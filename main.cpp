@@ -1,7 +1,5 @@
 #include "mainwindow.h"
 
-#include "ButtonSettingsWidget.h"
-
 #include <QApplication>
 
 int main(int argc, char *argv[])

@@ -33,7 +33,7 @@
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="buttonsTab">
        <attribute name="title">
@@ -193,24 +193,7 @@
   </action>
  </widget>
  <resources/>
- <connections>
-  <connection>
-   <sender>outputDeviceComboBox</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>MainWindow</receiver>
-   <slot>updateAudioOutput()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>520</x>
-     <y>82</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>530</x>
-     <y>727</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>updateAudioOutput()</slot>
  </slots>

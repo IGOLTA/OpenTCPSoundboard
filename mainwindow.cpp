@@ -1,12 +1,12 @@
 #include "mainwindow.h"
 
-#include <QDebug>
-
 MainWindow::MainWindow(QWidget *parent):
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    connect(ui->connectButton, SIGNAL(clicked()), this, SLOT(initConnection()));
 
     QList<QAudioDeviceInfo> deviceInfos = QAudioDeviceInfo::availableDevices(QAudio::AudioOutput);
 
@@ -21,14 +21,34 @@ MainWindow::~MainWindow()
 {
 }
 
-void MainWindow::generateButtonSettingsWidgets(char Width, char Height)
+void MainWindow::playAudioSample(const unsigned char &pos) {
+    unsigned char x = (pos & 0xF0) >> 4;
+    unsigned char y = pos & 0x0F;
+    playMedia(buttonSettingsWidgets[x * getButtonsHeight() + y]->getPath());
+}
+
+void MainWindow::initConnection() {
+    soundboardSocket = new SoundboardSocket(ui->ipLineEdit->text(), PORT, 3000, this);
+
+    connect(
+                soundboardSocket,
+                SIGNAL(ready(unsigned char)),
+                this,
+                SLOT(generateButtonSettingsWidgets(unsigned char))
+    );
+
+    soundboardSocket->start();
+}
+
+void MainWindow::generateButtonSettingsWidgets(const unsigned char &Dimensions)
 {
-    width = Width; height = Height;
+    buttonsDimensions = Dimensions;
 
     QGridLayout* gridLayout = new QGridLayout(ui->buttonsTab);
     ui->buttonsTab->setLayout(gridLayout);
 
-    for(int i = 0; i < width * height; i++) {
+    unsigned char height = getButtonsHeight();
+    for(int i = 0; i < getButtonsWidth() * height; i++) {
         buttonSettingsWidgets.push_back(new ButtonSettingsWidget(this));
         gridLayout->addWidget(buttonSettingsWidgets[i], i % height, i / height);
 
