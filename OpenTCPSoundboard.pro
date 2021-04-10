@@ -9,13 +9,17 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    AudioFileStream.cpp \
     ButtonSettingsWidget.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    soundboardsocket.cpp
 
 HEADERS += \
+    AudioFileStream.h \
     ButtonSettingsWidget.h \
-    mainwindow.h
+    mainwindow.h \
+    soundboardsocket.h
 
 TRANSLATIONS += \
     OpenTCPSoundboard_en_150.ts

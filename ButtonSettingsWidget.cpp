@@ -2,15 +2,13 @@
 
 ButtonSettingsWidget::ButtonSettingsWidget(QWidget* parent) : QWidget(parent)
 {
-    layout->addWidget(browseLabel, 0, 0);
-    layout->addWidget(browseLineEdit, 0, 1);
-    layout->addWidget(browseButton, 0, 2);
+    layout->addWidget(browseLineEdit, 0, 0);
+    layout->addWidget(browseButton, 0, 1);
 
-    layout->addWidget(audioTestButton, 1, 2);
+    layout->addWidget(audioTestButton, 1, 1);
 
     layout->addItem(spacer, 2, 1);
 
-    browseLabel->setText(tr("Select an audio sample"));
     browseButton->setText(tr("Browse..."));
 
     audioTestButton->setText(tr("Test audio sample"));

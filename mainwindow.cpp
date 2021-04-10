@@ -8,15 +8,12 @@ MainWindow::MainWindow(QWidget *parent):
 {
     ui->setupUi(this);
 
-    generateButtonSettingsWidgets(2, 5);
-
-    QAction* audioOutAction = ui->actionAudio_output;
     QList<QAudioDeviceInfo> deviceInfos = QAudioDeviceInfo::availableDevices(QAudio::AudioOutput);
 
-    for (QAudioDeviceInfo &deviceInfo : deviceInfos)
+    for (const QAudioDeviceInfo &deviceInfo : deviceInfos)
     {
-        QAction* action(this);
-        action->setText(deviceInfo.deviceName());
+        audioDevicesFromName.insert(deviceInfo.deviceName(), deviceInfo);
+        ui->outputDeviceComboBox->addItem(deviceInfo.deviceName());
     }
 }
 
@@ -28,9 +25,12 @@ void MainWindow::generateButtonSettingsWidgets(char Width, char Height)
 {
     width = Width; height = Height;
 
+    QGridLayout* gridLayout = new QGridLayout(ui->buttonsTab);
+    ui->buttonsTab->setLayout(gridLayout);
+
     for(int i = 0; i < width * height; i++) {
         buttonSettingsWidgets.push_back(new ButtonSettingsWidget(this));
-        ui->gridLayout->addWidget(buttonSettingsWidgets[i], i % height, i / height);
+        gridLayout->addWidget(buttonSettingsWidgets[i], i % height, i / height);
 
         connect(buttonSettingsWidgets[i], SIGNAL(testAudio(QString)), this, SLOT(playMedia(QString)));
     }
@@ -38,8 +38,15 @@ void MainWindow::generateButtonSettingsWidgets(char Width, char Height)
 
 void MainWindow::playMedia(const QString &path)
 {
-    qInfo() << path;
-    mediaPlayer->setMedia(QUrl::fromLocalFile(path));
+    QAudioDeviceInfo deviceInfo = audioDevicesFromName[ui->outputDeviceComboBox->currentText()];
+    QAudioFormat format = deviceInfo.preferredFormat();
+    QAudioOutput* audioOutput = new QAudioOutput(audioDevicesFromName[ui->outputDeviceComboBox->currentText()], audioDevicesFromName[ui->outputDeviceComboBox->currentText()].preferredFormat(), this);
+    audioOutput->setVolume(ui->volumeSlider->value());
 
-    mediaPlayer->play();
+    audioFileStream = new AudioFileStream;
+    if(!audioFileStream->init(format))
+        return;
+
+    audioOutput->start(audioFileStream);
+    audioFileStream->play(path);
 }

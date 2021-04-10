@@ -2,12 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QList>
+#include <QMap>
 #include <QtMultimedia>
 
 #include <QMainWindow>
 #include <ui_mainwindow.h>
 
 #include "ButtonSettingsWidget.h"
+#include "AudioFileStream.h"
 
 #define PORT 6587
 
@@ -31,8 +33,9 @@ private:
     char width, height;
     QList<ButtonSettingsWidget*> buttonSettingsWidgets;
 
-    QMediaPlayer* mediaPlayer = new QMediaPlayer;
+    QMap<QString, QAudioDeviceInfo> audioDevicesFromName;
 
+    AudioFileStream* audioFileStream;
 private slots:
     void playMedia(const QString &path);
 };

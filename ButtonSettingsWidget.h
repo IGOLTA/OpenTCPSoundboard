@@ -14,7 +14,6 @@ public:
 private:
     QGridLayout* layout = new QGridLayout(this);
 
-    QLabel* browseLabel = new QLabel(this);
     QLineEdit* browseLineEdit = new QLineEdit(this);
     QPushButton* browseButton = new QPushButton(this);
 
