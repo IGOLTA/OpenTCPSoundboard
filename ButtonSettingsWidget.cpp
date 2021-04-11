@@ -27,6 +27,11 @@ QString ButtonSettingsWidget::getPath()
     return browseLineEdit->text();
 }
 
+void ButtonSettingsWidget::setPath(QString path)
+{
+    browseLineEdit->setText(path);
+}
+
 void ButtonSettingsWidget::testAudioSlot()
 {
     testAudio(getPath());

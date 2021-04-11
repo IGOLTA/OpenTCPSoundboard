@@ -10,7 +10,7 @@ public:
     explicit ButtonSettingsWidget(QWidget* parent = nullptr);
 
     QString getPath();
-
+    void setPath(QString path);
 private:
     QGridLayout* layout = new QGridLayout(this);
 

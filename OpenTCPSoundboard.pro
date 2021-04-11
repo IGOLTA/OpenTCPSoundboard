@@ -11,15 +11,15 @@ CONFIG += c++11
 SOURCES += \
     AudioFileStream.cpp \
     ButtonSettingsWidget.cpp \
+    MainWindow.cpp \
     SoundboardSocket.cpp \
-    main.cpp \
-    mainwindow.cpp
+    main.cpp
 
 HEADERS += \
     AudioFileStream.h \
     ButtonSettingsWidget.h \
-    SoundboardSocket.h \
-    mainwindow.h
+    MainWindow.h \
+    SoundboardSocket.h
 
 TRANSLATIONS += \
     OpenTCPSoundboard_en_150.ts
@@ -30,4 +30,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 FORMS += \
-    mainwindow.ui
+    MainWindow.ui

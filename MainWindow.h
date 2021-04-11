@@ -26,8 +26,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    unsigned char getButtonsWidth() { return (buttonsDimensions & 0xF0) >> 4; }
-    unsigned char getButtonsHeight() { return buttonsDimensions & 0x0F; }
+    unsigned short getButtonsWidth() { return ((buttonsDimensions & 0xF0) >> 4) + 1; }
+    unsigned short getButtonsHeight() { return (buttonsDimensions & 0x0F) + 1; }
 
 public slots:
     void playAudioSample(const unsigned char &pos);
@@ -35,6 +35,7 @@ public slots:
 private:
     Ui::MainWindow *ui;
 
+    QMap<unsigned char, QString> buttonsAudioPaths;
     unsigned char buttonsDimensions;
     QList<ButtonSettingsWidget*> buttonSettingsWidgets;
 
@@ -43,10 +44,16 @@ private:
     AudioFileStream* audioFileStream;
     SoundboardSocket* soundboardSocket;
 
+    QFile* dataFile = new QFile("data", this);
+
+
+    void loadSavedData();
+    void saveData();
 private slots:
     void playMedia(const QString &path);
     void initConnection();
     void generateButtonSettingsWidgets(const unsigned char &Dimensionss);
+    void connectionClosed();
 };
 
 #endif
