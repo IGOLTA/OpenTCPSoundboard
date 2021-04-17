@@ -6,7 +6,9 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
-    w.show();
+
+    if(QCoreApplication::arguments().at(1) != "hidden")
+        w.show();
 
     return a.exec();
 }
